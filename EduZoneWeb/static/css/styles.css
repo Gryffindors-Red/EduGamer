@@ -1,0 +1,53 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  
+}
+
+
+
+  
+  body {
+    font-family: Arial, sans-serif;
+    background-image:url("https://wallpapers.com/images/hd/study-table-soft-aesthetic-iwuk4cee6vxijmku.jpg");
+  }
+  
+  header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .course-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
+  }
+  
+  .course {
+    background-color: #fff;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    margin: 10px;
+    max-width: 300px;
+  }
+  
+  .course img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  .course-info {
+    padding: 10px;
+  }
+  
+  .course-info h2 {
+    margin-bottom: 10px;
+  }
+  
+  .course-info p {
+    font-size: 14
+  }
