@@ -1,6 +1,8 @@
 import random
 import time
 import json
+from web3 import Web3, HTTPProvider
+
 
 from django.http import JsonResponse
 from agora_token_builder import RtcTokenBuilder
@@ -8,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from ..models import Faculty_details, Users, Room, Message, RoomMember, Gallery, Student
 from django.contrib.auth.models import User
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,HttpResponseRedirect
 from django.http import JsonResponse
 from .Tool.blogTool import get_images
 from .Tool.Tools import student_detials, staff_detials
@@ -143,9 +145,18 @@ def deleteMember(request):
 
 # ....... room chating
 
+def connect_metamask(request):
+    # Connect to the local blockchain node
+    web3 = Web3(HTTPProvider(
+        'https://polygon-mumbai.g.alchemy.com/v2/K59YdNGK95akCLJrA1m9nYPZ7JYNa8Me'))
+    return render(request, 'common/index.html')
 
 def chat_home(request):
     return render(request, 'chat_room/home.html', student_detials(request, 'Chat Home'))
+
+
+def student_dashboard(request):
+    return render(request, 'student/student_dashboard.html', student_detials(request, 'Chat Home'))
 
 
 def staff_chat_home(request):

@@ -2,7 +2,7 @@
 <html lang="en">
 
 </html>
-{% loadstatic %}
+{% load static %}
 
 <html>
 
@@ -84,6 +84,36 @@
 <!-- sidebar -->
 <script src=" {% static 'js/jquery.mCustomScrollbar.concat.min.js' %} "></script>
 <script src=" {% static 'js/custom.js' %} "></script>
+<script>
+  var web3 = new Web3(window.ethereum);
+
+  async function connectMetamask() {
+
+    try {
+      // Prompt user to connect their Metamask wallet
+      await window.ethereum.enable();
+
+      const web3 = new Web3(window.ethereum);
+      // Retrieve the user's Ethereum address
+      var accounts = await web3.eth.getAccounts();
+      var userAddress = accounts[0];
+      var csrftoken = Cookies.get('csrftoken');
+      console.log(userAddress)
+      // Send the Ethereum address to the Django backend using an AJAX request
+      $.ajax({
+        url: "{% url 'connect_metamask' %}",
+        type: 'get',
+        data: { 'address': userAddress },
+        success: function (response) {
+          console.log(response);
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+</script>
 </body>
 
 </html>

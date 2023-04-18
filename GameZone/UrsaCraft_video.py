@@ -8,6 +8,8 @@ import json
 # Log settings...
 Steps_log = []
 
+Enemy_count = 0
+
 # Level Settings
 LevelName = 'Project_x'
 AutoId = 0
@@ -124,10 +126,11 @@ class Voxel(Button):
             tag=tag,
             scale=0.5)
         self.id_ = id_
+        self.tag_ = tag
 
-    def input(self, key,):
+    def input(self, key):
         if self.hovered:
-            if key == 'right mouse down':
+            if key == 'left mouse down':
                 punch_sound.play()
                 for i, j in enumerate(texture):
                     if block_pick == i:
@@ -135,11 +138,12 @@ class Voxel(Button):
                                       mouse.normal, texture=texture[i])
                         update_steps(self.position + mouse.normal,
                                      texture[i], UniqueCode(), self.id_)
+                        update_value(LevelName, id_=self.id_, x=int(self.position.x), y=int(self.position.y),
+                                     z=int(self.position.z), texture=str(texture[i]), tagName=self.tag_)
 
-            if key == 'left mouse down':
+            if key == 'right mouse down':
                 punch_sound.play()
                 destroy(self)
-            print(self.hovered)
 
 
 class Sky(Entity):
@@ -175,12 +179,10 @@ if input_type == 1:
             voxel = Voxel(position=(x, 0, z))
             Steps_logs = {}
             update_steps((x, 0, z), texture[0], UniqueCode(), AutoId)
-            print(voxel.tag, voxel.id)
 elif input_type == 2:
     with open('Project_x.json', 'r') as f:
         json_data = json.load(f)
     f.close()
-    print(json_data[0])
     for i in json_data:
         voxel = Voxel(position=i['position'],
                       texture=i.get('texture'), tag=i.get('tag'), id_=i.get('id'))
@@ -191,6 +193,7 @@ ceiling = Entity(model='cube', color=random.choice([color.red, color.blue, color
                  origin_y=-.5, scale=(0.7, 0.7, 0.7), collider='box')
 
 player = FirstPersonController()
+player.position = (5, 0, 5)
 sky = Sky()
 hand = Hand()
 
@@ -207,13 +210,18 @@ def destroy_object():
 
 
 def input(key):
-    if key == 'left mouse down':
+    if key == 'q':
+        global Enemy_count
         destroy_object()
-        for i in range(random.choice([i for i in range(3, 10)])):
-            ceiling = Entity(model='cube', color=random.choice([color.red, color.blue, color.black, color.pink, color.yellow, color.orange]),
-                             origin_y=-.5, scale=(0.7, 0.7, 0.7), collider='box')
-            ceiling.add_script(SmoothFollow(
-                target=player, offset=[0, 1, 0], speed=0.3))
+        if Enemy_count == 5:
+            pass
+        else:
+            for i in range(random.choice([i for i in range(3, 10)])):
+                ceiling = Entity(model='cube', color=random.choice([color.red, color.blue, color.black, color.pink, color.yellow, color.orange]),
+                                 origin_y=-.5, scale=(0.7, 0.7, 0.7), collider='box')
+                ceiling.add_script(SmoothFollow(
+                    target=player, offset=[0, 1, 0], speed=0.3))
+        Enemy_count = Enemy_count+1
 
 
 app.run()

@@ -30,6 +30,40 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
 </head>
 <!-- body -->
+<style>
+   .button-35 {
+      align-items: center;
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: transparent 0 0 0 3px, rgba(18, 18, 18, .1) 0 6px 20px;
+      box-sizing: border-box;
+      color: #121212;
+      cursor: pointer;
+      display: inline-flex;
+      flex: 1 1 auto;
+      font-family: Inter, sans-serif;
+      font-size: 1.2rem;
+      font-weight: 700;
+      justify-content: center;
+      line-height: 1;
+      margin: 0;
+      outline: none;
+      padding: 1rem 1.2rem;
+      text-align: center;
+      text-decoration: none;
+      transition: box-shadow .2s, -webkit-box-shadow .2s;
+      white-space: nowrap;
+      border: 0;
+      user-select: none;
+      -webkit-user-select: none;
+      touch-action: manipulation;
+   }
+
+   .button-35:hover {
+      box-shadow: #121212 0 0 0 3px, transparent 0 0 0 0;
+   }
+</style>
+
 
 <body class="main-layout">
    <!-- loader  -->
@@ -58,13 +92,18 @@
                      <div class="limit-box">
                         <nav class="main-menu">
                            <ul class="menu-area-main">
-                              <li> <a href=" {% static 'index.html' %} ">Home</a> </li>
-                              <li class="active"> <a href=" {% static 'about.html' %} ">BLOG</a> </li>
-                              <li><a href=" {% static 'books.html' %} ">COURSESs</a></li>
-                              <li><a href=" {% static 'library.html' %} ">MEET</a></li>
+                              <li class="active"> <a href="home">Home</a> </li>
+                              <li> <a href="About">About</a> </li>
+                              <li><a href="contact">contact</a></li>
+                              <li><a href="library">library</a></li>
+                              <li><a href="AI">AI</a></li>
+
                               <li><a href=" {% static 'contact.html' %} ">Contact us</a></li>
-                              <li class="mean-last"> <a href="#"><img src=" {% static 'images/search_icon.png' %} "
-                                       alt="#" /></a> </li>
+
+                              <a href="student_dashboard"><button class="button-35" role="button"
+                                    onclick="connectMetamask()">Connect
+                                    Wallet</button></a>
+
                            </ul>
                         </nav>
                      </div>
@@ -169,6 +208,36 @@
 </footer>
 <!-- end footer -->
 <!-- Javascript files-->
+<script>
+   var web3 = new Web3(window.ethereum);
+
+   async function connectMetamask() {
+
+      try {
+         // Prompt user to connect their Metamask wallet
+         await window.ethereum.enable();
+
+         const web3 = new Web3(window.ethereum);
+         // Retrieve the user's Ethereum address
+         var accounts = await web3.eth.getAccounts();
+         var userAddress = accounts[0];
+         var csrftoken = Cookies.get('csrftoken');
+         console.log(userAddress)
+         // Send the Ethereum address to the Django backend using an AJAX request
+         $.ajax({
+            url: "{% url 'connect_metamask' %}",
+            type: 'get',
+            data: { 'address': userAddress },
+            success: function (response) {
+               console.log(response);
+            }
+         });
+      } catch (error) {
+         console.log(error);
+      }
+   }
+
+</script>
 <script src=" {% static 'js/jquery.min.js' %} "></script>
 <script src=" {% static 'js/popper.min.js' %} "></script>
 <script src=" {% static 'js/bootstrap.bundle.min.js' %} "></script>

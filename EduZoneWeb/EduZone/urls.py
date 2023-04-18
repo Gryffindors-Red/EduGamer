@@ -32,13 +32,15 @@ def Make_Join(Componets):
 
 tools = [
     path('home', home, name='home'),
+    path('student_dashboard', student_dashboard, name='student_dashboard'),
     path('AI', AI, name='AI'),
     path('About', About, name='About'),
+    path('connect_metamask', connect_metamask, name='connect_metamask'),
     path('contact', contact, name='contact'),
     path('library', library, name='library'),
     path('books', books, name='books'),
     path('', home, name='home'),
-    path('toolHome', toolHome),
+    path('toolHome', toolHome, name='toolHome'),
     path('trans', translate_, name='trans'),
     path('convert_text', convert_text, name='convert_text'),
     path('wikipedia_summary', wikipedia_summary, name='wikipedia_summary'),
