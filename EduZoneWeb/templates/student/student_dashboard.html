@@ -1,0 +1,38 @@
+{% extends 'student/studentbase.html' %}
+{% load widget_tweaks %}
+{% block content %}
+
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+  <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+  <br><br>
+  <div class="container">
+    <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+      <div class="col-span-1">
+        <div class="bg-blue-500 rounded-lg shadow-md p-4">
+          <h6 class="mb-4 text-white font-semibold">Available Exams</h6>
+          <h2 class="text-right text-white"><i class="fas fa-book mr-2"></i><span>{{total_course}}</span></h2>
+        </div>
+      </div>
+      <div class="col-span-1">
+        <div class="bg-yellow-500 rounded-lg shadow-md p-4">
+          <h6 class="mb-4 text-white font-semibold">Total Questions</h6>
+          <h2 class="text-right text-white"><i class="fas fa-question-circle mr-2"></i><span>{{total_question}}</span>
+          </h2>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <br><br><br><br><br><br><br><br><br><br>
+
+  <script src="http://netdna.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+
+
+  {% endblock content %}

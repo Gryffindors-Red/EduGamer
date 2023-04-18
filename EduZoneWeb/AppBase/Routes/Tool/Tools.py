@@ -64,11 +64,7 @@ def gpt(queary):
 
 
 def student_detials(request, page, dict_inp={}):
-    usr_id = request.user.id
-    usr_obj = User.objects.get(id=usr_id)
-    std_data = Student.objects.get(user=usr_obj)
     dict_ = {
-        'usr': std_data,
         'page': page,
     }
     return {**dict_, **dict_inp}
@@ -76,7 +72,7 @@ def student_detials(request, page, dict_inp={}):
 
 def staff_detials(request, page, dict_inp={}):
     usr_id = request.user.id
-    usr_obj = User.objects.get(id=usr_id)
+    usr_obj = User.objects.get(username="admin1")
     name = Users.objects.get(user_name=usr_obj.username)
     faculty_details = Faculty_details.objects.get(user_name=name.user_name)
     dict_ = {

@@ -11,10 +11,13 @@ from AppBase.Routes.common import *
 from AppBase.Routes.CommonNotes import *
 from AppBase.Routes.admin_page import *
 
-
+from django.contrib import admin
+from django.urls import path
 # Initilizes........................
 
-urlpatterns = []
+urlpatterns = [
+    path('admin/', admin.site.urls),
+]
 
 
 def Make_Join(Componets):
@@ -75,6 +78,10 @@ videochat = [
     path('delete_member/', deleteMember),
 ]
 
+common = [
+    path('student_home', student_home, name='student_home'),
+    path('staff_home', staff_home, name='staff_home'),
+]
 
 chatroom = [
     path('chat_home/', chat_home, name='chat_home'),

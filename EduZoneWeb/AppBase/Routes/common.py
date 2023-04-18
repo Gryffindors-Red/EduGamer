@@ -12,9 +12,9 @@ from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from .Tool.blogTool import get_images
 from .Tool.Tools import student_detials, staff_detials
-from base import models as TMODEL
-from base import models as SMODEL
-from base import models
+from AppBase import models as TMODEL
+from AppBase import models as SMODEL
+from AppBase import models
 
 
 def student_home(request):
