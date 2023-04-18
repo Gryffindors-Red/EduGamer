@@ -1,6 +1,6 @@
 # EduGamer
 
-#The problem EduGamer solves
+#The problem EduGamer solves<br>
 Edugamer solves the problem of low engagement and motivation in online learning by providing an innovative and immersive learning experience that combines learning and gaming, making the learning process fun, interactive, and rewarding.
 
 ![WhatsApp Image 2023-04-18 at 16 27 25](https://user-images.githubusercontent.com/102911214/232761313-5f5d06b9-a968-4e1d-be42-37ab76e7b7d2.jpg)
@@ -15,5 +15,5 @@ Edugamer solves the problem of low engagement and motivation in online learning 
 
 ![WhatsApp Image 2023-04-18 at 16 27 27](https://user-images.githubusercontent.com/102911214/232761654-b59f4906-986c-4244-967d-9e5bbe809268.jpg)
 
-#Gamification of EduTech
+#Gamification of EduTech<br>
 Our project, Edugamer, fits perfectly into the gamification of edutech track. Edugamer combines both gamification and edutech, the user can unlock the premium features in Learning system by playing the game or completing the challenges (Will be inplemented in the future). Our project offers a unique approach to online learning, making the learning process more interactive, fun, and rewarding.
