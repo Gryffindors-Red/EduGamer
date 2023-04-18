@@ -17,6 +17,30 @@ from AppBase import models as SMODEL
 from AppBase import models
 
 
+def home(request):
+    return render(request, "Common/index.html")
+
+
+def AI(request):
+    return render(request, "Common/AI.html")
+
+
+def About(request):
+    return render(request, "Common/About.html")
+
+
+def contact(request):
+    return render(request, "Common/contact.html")
+
+
+def library(request):
+    return render(request, "Common/library.html")
+
+
+def books(request):
+    return render(request, "Common/books.html")
+
+
 def student_home(request):
     usr_id = request.user.id
     usr_obj = User.objects.get(id=usr_id)

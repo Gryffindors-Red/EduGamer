@@ -31,6 +31,13 @@ def Make_Join(Componets):
 
 
 tools = [
+    path('home', home, name='home'),
+    path('AI', AI, name='AI'),
+    path('About', About, name='About'),
+    path('contact', contact, name='contact'),
+    path('library', library, name='library'),
+    path('books', books, name='books'),
+    path('', home, name='home'),
     path('toolHome', toolHome),
     path('trans', translate_, name='trans'),
     path('convert_text', convert_text, name='convert_text'),
