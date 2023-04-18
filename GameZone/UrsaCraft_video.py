@@ -127,7 +127,7 @@ class Voxel(Button):
 
     def input(self, key,):
         if self.hovered:
-            if key == 'left mouse down':
+            if key == 'right mouse down':
                 punch_sound.play()
                 for i, j in enumerate(texture):
                     if block_pick == i:
@@ -136,7 +136,7 @@ class Voxel(Button):
                         update_steps(self.position + mouse.normal,
                                      texture[i], UniqueCode(), self.id_)
 
-            if key == 'right mouse down':
+            if key == 'left mouse down':
                 punch_sound.play()
                 destroy(self)
             print(self.hovered)
@@ -187,7 +187,7 @@ elif input_type == 2:
         update_steps(Position=i['position'],
                      Texture=i.get('texture'), Tag=i.get('tag'), id=i.get('id'))
 
-ceiling = Entity(model='cube', color=random.choice([color.red, color.blue, color.black, color.pivot, color.pink, color.yellow, color.orange]),
+ceiling = Entity(model='cube', color=random.choice([color.red, color.blue, color.black, color.pink, color.yellow, color.orange]),
                  origin_y=-.5, scale=(0.7, 0.7, 0.7), collider='box')
 
 player = FirstPersonController()
@@ -209,10 +209,11 @@ def destroy_object():
 def input(key):
     if key == 'left mouse down':
         destroy_object()
-        ceiling = Entity(model='cube', color=random.choice([color.red, color.blue, color.black, color.pivot, color.pink, color.yellow, color.orange]),
-                         origin_y=-.5, scale=(0.7, 0.7, 0.7), collider='box')
-        ceiling.add_script(SmoothFollow(
-            target=player, offset=[0, 1, 0], speed=0.3))
+        for i in range(random.choice([i for i in range(3, 10)])):
+            ceiling = Entity(model='cube', color=random.choice([color.red, color.blue, color.black, color.pink, color.yellow, color.orange]),
+                             origin_y=-.5, scale=(0.7, 0.7, 0.7), collider='box')
+            ceiling.add_script(SmoothFollow(
+                target=player, offset=[0, 1, 0], speed=0.3))
 
 
 app.run()
