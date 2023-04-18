@@ -76,10 +76,14 @@ def update_steps(Position, Texture, Tag, id):
 
 
 app = Ursina()
-grass_texture = load_texture('assets/grass_block.png')
-stone_texture = load_texture('assets/stone_block.png')
-brick_texture = load_texture('assets/brick_block.png')
-dirt_texture = load_texture('assets/dirt_block.png')
+texture = [load_texture('assets/grass_block.png'),
+           load_texture('assets/grass_block.png'),
+           load_texture('assets/stone_block.png'),
+           load_texture('assets/brick_block.png'),
+           load_texture('assets/dirt_block.png'),
+           load_texture('assets/land/Group 7.png'),
+           load_texture('assets/land/llll.png')]
+
 sky_texture = load_texture('assets/skybox.png')
 arm_texture = load_texture('assets/arm_texture.png')
 punch_sound = Audio('assets/punch_sound', loop=False, autoplay=False)
@@ -96,15 +100,10 @@ def update():
         hand.active()
     else:
         hand.passive()
-
-    if held_keys['1']:
-        block_pick = 1
-    if held_keys['2']:
-        block_pick = 2
-    if held_keys['3']:
-        block_pick = 3
-    if held_keys['4']:
-        block_pick = 4
+    for i in range(len(texture)):
+        if i < 10:
+            if held_keys[str(i)]:
+                block_pick = i
 
     if held_keys['control'] and held_keys['s']:
         with open(LevelName+'.json', 'w') as f:
@@ -113,7 +112,7 @@ def update():
 
 
 class Voxel(Button):
-    def __init__(self, position=(0, 0, 0), texture=grass_texture, tag=UniqueCode(), id_=0):
+    def __init__(self, position=(0, 0, 0), texture=texture[0], tag=UniqueCode(), id_=0):
         super().__init__(
             id=id_,
             parent=scene,
@@ -130,34 +129,17 @@ class Voxel(Button):
         if self.hovered:
             if key == 'left mouse down':
                 punch_sound.play()
-                if block_pick == 1:
-                    voxel = Voxel(position=self.position +
-                                  mouse.normal, texture=grass_texture)
-                    update_steps(self.position + mouse.normal,
-                                 grass_texture, UniqueCode(), self.id_)
-
-                if block_pick == 2:
-                    uni = UniqueCode()
-                    voxel = Voxel(position=self.position +
-                                  mouse.normal, texture=stone_texture)
-                    update_steps(self.position + mouse.normal,
-                                 stone_texture, uni, self.id_)
-                    update_value(LevelName, 1, int(self.position.x + mouse.normal.x), int(self.position.y +
-                                 mouse.normal.y), int(self.position.z + mouse.normal.z), str(stone_texture), uni)
-                if block_pick == 3:
-                    voxel = Voxel(position=self.position +
-                                  mouse.normal, texture=brick_texture)
-                    update_steps(self.position + mouse.normal,
-                                 brick_texture, UniqueCode(), self.id_)
-                if block_pick == 4:
-                    voxel = Voxel(position=self.position +
-                                  mouse.normal, texture=dirt_texture)
-                    update_steps(self.position + mouse.normal,
-                                 dirt_texture, UniqueCode(), self.id_)
+                for i, j in enumerate(texture):
+                    if block_pick == i:
+                        voxel = Voxel(position=self.position +
+                                      mouse.normal, texture=texture[i])
+                        update_steps(self.position + mouse.normal,
+                                     texture[i], UniqueCode(), self.id_)
 
             if key == 'right mouse down':
                 punch_sound.play()
                 destroy(self)
+            print(self.hovered)
 
 
 class Sky(Entity):
@@ -192,7 +174,7 @@ if input_type == 1:
         for x in range(20):
             voxel = Voxel(position=(x, 0, z))
             Steps_logs = {}
-            update_steps((x, 0, z), grass_texture, UniqueCode(), AutoId)
+            update_steps((x, 0, z), texture[0], UniqueCode(), AutoId)
             print(voxel.tag, voxel.id)
 elif input_type == 2:
     with open('Project_x.json', 'r') as f:
@@ -205,9 +187,32 @@ elif input_type == 2:
         update_steps(Position=i['position'],
                      Texture=i.get('texture'), Tag=i.get('tag'), id=i.get('id'))
 
+ceiling = Entity(model='cube', color=random.choice([color.red, color.blue, color.black, color.pivot, color.pink, color.yellow, color.orange]),
+                 origin_y=-.5, scale=(0.7, 0.7, 0.7), collider='box')
 
 player = FirstPersonController()
 sky = Sky()
 hand = Hand()
+
+ceiling.add_script(SmoothFollow(
+    target=player, offset=[0, 1, 0], speed=0.3))
+
+
+# Create a function that destroys an object when it's clicked
+def destroy_object():
+    if mouse.hovered_entity:
+        mouse.hovered_entity.disable()
+
+# Create a mouse click event to destroy the object
+
+
+def input(key):
+    if key == 'left mouse down':
+        destroy_object()
+        ceiling = Entity(model='cube', color=random.choice([color.red, color.blue, color.black, color.pivot, color.pink, color.yellow, color.orange]),
+                         origin_y=-.5, scale=(0.7, 0.7, 0.7), collider='box')
+        ceiling.add_script(SmoothFollow(
+            target=player, offset=[0, 1, 0], speed=0.3))
+
 
 app.run()
