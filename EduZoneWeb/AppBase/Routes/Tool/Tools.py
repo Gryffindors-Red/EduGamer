@@ -71,13 +71,10 @@ def student_detials(request, page, dict_inp={}):
 
 
 def staff_detials(request, page, dict_inp={}):
-    usr_id = request.user.id
-    usr_obj = User.objects.get(username="admin1")
-    name = Users.objects.get(user_name=usr_obj.username)
-    faculty_details = Faculty_details.objects.get(user_name=name.user_name)
+
     dict_ = {
-        'stusr': faculty_details,
+        'stusr': '',
         'page': page,
-        'staff_name': faculty_details.name
+        'staff_name': "EduGamer"
     }
     return {**dict_, **dict_inp}

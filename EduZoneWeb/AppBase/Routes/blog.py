@@ -102,7 +102,6 @@ def delete_blog(request):
     return render(request, "blog/view_blog.html", {'blog': page})
 
 
-@login_required(login_url='/FourNotFout')
 def list_edit_blog(request):
     items = get_blog()
     return render(request, "blog/edit_blog_list.html", staff_detials(request, 'Manage Blog', {'blogs': items}))
